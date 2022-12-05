@@ -1,0 +1,57 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup Label="Build">
+		<Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+		<BuildFolder Condition="'$(BuildFolder)' == ''">build</BuildFolder>
+		<BuildPath Condition="'$(BuildPath)' == ''">$(BuildFolder)\</BuildPath>
+		<BuildPath Condition="!HasTrailingSlash('$(BuildPath)')">$(BuildPath)\</BuildPath>
+		<BuildPath Condition="$([System.IO.Path]::IsPathRooted('$(BuildPath)')) AND !$(BuildPath.StartsWith('$(MSBuildProjectDirectory)'))">$(BuildPath)$(BuildFolder)\$(MSBuildProjectName)\</BuildPath>
+		<_InitialBuildPath>$(BuildPath)</_InitialBuildPath>
+
+		<!-- Exclude BuildPath, by default -->
+		<DefaultItemExcludes>$(DefaultItemExcludes);$(BuildPath)\**</DefaultItemExcludes>
+	</PropertyGroup>
+
+	<PropertyGroup Label="Build">
+		<IntermediateOutputFolder Condition="'$(IntermediateOutputFolder)' == ''">obj</IntermediateOutputFolder>
+		<BaseIntermediateOutputPath>$(BuildPath)$(IntermediateOutputFolder)\</BaseIntermediateOutputPath>
+		<IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
+
+		<OutputFolder Condition="'$(OutputFolder)' == ''">bin</OutputFolder>
+		<BaseOutputPath>$(BuildPath)$(OutputFolder)\</BaseOutputPath>
+		<OutputPath>$(BaseOutputPath)$(Configuration)\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Label="ProjectExtensions">
+		<MSBuildProjectExtensionsPath Condition="'$(MSBuildProjectExtensionsPath)' == ''">$(BaseIntermediateOutputPath)</MSBuildProjectExtensionsPath>
+		<MSBuildProjectExtensionsPath Condition="!HasTrailingSlash('$(MSBuildProjectExtensionsPath)')">$(MSBuildProjectExtensionsPath)\</MSBuildProjectExtensionsPath>
+		<MSBuildProjectExtensionsPath Condition="!$([System.IO.Path]::IsPathRooted('$(MSBuildProjectExtensionsPath)'))">$([System.IO.Path]::Combine('$(MSBuildProjectDirectory)', '$(MSBuildProjectExtensionsPath)'))</MSBuildProjectExtensionsPath>
+		<_InitialMSBuildProjectExtensionsPath>$(MSBuildProjectExtensionsPath)</_InitialMSBuildProjectExtensionsPath>
+	</PropertyGroup>
+
+	<PropertyGroup Label="Publish">
+		<PublishFolder Condition="'$(PublishFolder)' == ''">publish</PublishFolder>
+		<PublishPath Condition="'$(PublishPath)' == ''">$(PublishFolder)\</PublishPath>
+		<PublishPath Condition="!HasTrailingSlash('$(PublishPath)')">$(PublishPath)\</PublishPath>
+		<PublishPath Condition="$([System.IO.Path]::IsPathRooted('$(PublishPath)')) AND !$(PublishPath.StartsWith('$(MSBuildProjectDirectory)'))">$(PublishPath)$(PublishFolder)\</PublishPath>
+
+		<!-- Exclude PublishPath, by default -->
+		<DefaultItemExcludes>$(DefaultItemExcludes);$(PublishPath)\**</DefaultItemExcludes>
+	</PropertyGroup>
+
+	<PropertyGroup Label="Publish.Legacy">
+		<PublishDir>$(PublishPath)$(MSBuildProjectName)</PublishDir>
+		<PublishDir Condition="'$(AssemblyName)' != ''">$(PublishPath)$(AssemblyName)</PublishDir>
+		<PublishDir Condition="'$(Configuration)' != 'Release'">$(PublishDir)_$(Configuration)</PublishDir>
+		<PublishDir Condition="!HasTrailingSlash('$(PublishDir)')">$(PublishDir)\</PublishDir>
+	</PropertyGroup>
+
+	<PropertyGroup Label="NuGet">
+		<RestoreOutputPath>$(BaseIntermediateOutputPath)</RestoreOutputPath>
+		<PackageOutputPath>$(PublishPath)\</PackageOutputPath>
+		<NuspecOutputPath>$(PublishPath)\</NuspecOutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<ImportedMSBuildOutputPathsProps>true</ImportedMSBuildOutputPathsProps>
+	</PropertyGroup>
+</Project>

@@ -1,0 +1,21 @@
+<Project>
+
+	<PropertyGroup Label="Globals">
+		<RepoRootDir>$(MSBuildThisFileDirectory)</RepoRootDir>
+		<BuildToolsPath>$(RepoRootDir)Tools\</BuildToolsPath>
+	</PropertyGroup>
+
+	<Import Project="$(BuildToolsPath)Common.props" />
+
+	<PropertyGroup Label="Output">
+		<BuildFolder>.build</BuildFolder>
+		<BuildPath>$(RepoRootDir)</BuildPath>
+		<PublishFolder>packages</PublishFolder>
+		<PublishPath>$(RepoRootDir)</PublishPath>
+		<OutputFolder>bin</OutputFolder>
+		<IntermediateOutputFolder>obj</IntermediateOutputFolder>
+	</PropertyGroup>
+
+	<Import Project="$(BuildToolsPath)MSBuild.OutputPaths.props" />
+
+</Project>

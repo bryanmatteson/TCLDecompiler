@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RuleSet Name="Rules for ASP.NET Core" ToolsVersion="15.0">
+	<Rules AnalyzerId="Roslynator.CSharp.Analyzers" RuleNamespace="Roslynator.CSharp.Analyzers">
+		<Rule Id="RCS1090" Action="None" />
+		<Rule Id="RCS1036" Action="None" />
+		<Rule Id="RCS1057" Action="None" />
+		<Rule Id="IDE0051" Action="None" />
+		<Rule Id="IDE0052" Action="None" />
+		<Rule Id="RCS1003" Action="None" />
+		<Rule Id="RCS1158" Action="None" />
+		<Rule Id="RCS1187" Action="None" />
+		<Rule Id="RCS1085" Action="None" />
+	</Rules>
+</RuleSet>
